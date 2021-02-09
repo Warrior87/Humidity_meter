@@ -30,15 +30,20 @@ DHT_Unified dht(DHTPIN, DHTTYPE);
 uint32_t delayMS;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   // Initialize device.
   pinMode(gndPin, OUTPUT);
   pinMode(powerPin, OUTPUT);
   digitalWrite(gndPin, LOW);
+  digitalWrite(powerPin, LOW);
+  delay(500);
+  digitalWrite(gndPin, LOW);
   digitalWrite(powerPin, HIGH);
+  delay(500);
   dht.begin();
   // Print temperature sensor details.
   sensor_t sensor;
+  dht.temperature().getSensor(&sensor);
   // Set delay between sensor readings based on sensor details.
   delayMS = sensor.min_delay / 1000;
 }
